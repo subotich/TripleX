@@ -2,7 +2,16 @@
 //
 
 #include <iostream>
-#include <ctime>
+#include <random>
+
+int randomise()
+{
+	std::random_device rd;  //Will be used to obtain a seed for the random number engine
+	std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+	std::uniform_int_distribution<> dis(1, 9);
+
+	return dis(gen);
+}
 
 void PrintIntroduction(int Difficulty)
 {
@@ -15,13 +24,12 @@ bool PlayGame(int Difficulty)
 	PrintIntroduction(Difficulty);
 
 	// Generate Code
-	const int CodeA = rand() % Difficulty + Difficulty;
-	const int CodeB = rand() % Difficulty + Difficulty;
-	const int CodeC = rand() % Difficulty + Difficulty;
+	const int CodeA = randomise() % Difficulty + Difficulty;
+	const int CodeB = randomise() % Difficulty + Difficulty;
+	const int CodeC = randomise() % Difficulty + Difficulty;
 
 	const int CodeSum = CodeA + CodeB + CodeC;
 	const int CodeProduct = CodeA * CodeB * CodeC;
-
 
 	// Print CodeSum and CodeProduct to the terminal
 	std::cout << "+ There are 3 numbers in the code";
@@ -50,10 +58,8 @@ bool PlayGame(int Difficulty)
 
 int main()
 {
-	srand(time(NULL)); // create new random sequence based on time of day
-
-	int LevelDifficulty = 1;
-	int const MaxDifficulty = 5;
+	int LevelDifficulty = 3;
+	int const MaxDifficulty = 7;
 
 	while (LevelDifficulty <= MaxDifficulty) // Loop game until all levels completed
 	{
